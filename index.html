@@ -26,6 +26,18 @@
                 const planeDark = document.getElementById("paintingDarkPlane");
                 const div = document.getElementById("div");
                 var played = false;
+              
+        // Smooth tracking
+//         AFRAME.registerComponent('smooth-position', {
+//         schema: {
+//           target: {type: 'selector'},
+//           factor: {type: 'number', default: 0.01} // change this value to adjust smoothing factor
+//         },
+        
+//         tick: function() {
+//           if (!this.data.target) return;
+//           this.el.object3D.position.lerp(this.data.target.object3D.position, this.data.factor);
+//         }
                 
                 // detect target found
                 target.addEventListener("targetFound", event => {
@@ -46,6 +58,8 @@
                             //btn4.emit('fadein');
                         }
                     }
+                  // Lock position of video plane
+                plane.setAttribute('position', plane.getAttribute('position'));    
                 });
                 
                 // detect target lost
@@ -54,6 +68,8 @@
                     this.found = false
                     if(!played)
                         video.pause();
+                  // Unlock position of video plane
+                plane.removeAttribute('position');
                 });
                 
                 // detect click event
@@ -82,7 +98,7 @@
 
 <body>
     <a-scene 
-        mindar-image="imageTargetSrc: .\assets\trackingfeatures\targets_small.mind; filterMinCF: 0.000001; filterBeta: 500" 
+        mindar-image="imageTargetSrc: ..\assets\trackingfeatures\targets_small.mind; warmupTolerance: 10; missTolerance: 10; filterMinCF: 0.1; filterBeta: 10" 
         color-space="sRGB" 
         renderer="colorManagement: true, physicallyCorrectLights" 
         vr-mode-ui="enabled: false"
@@ -91,50 +107,51 @@
         raycaster="objects: .clickable"> <!-- -->
 
         <a-assets>
-            <img id="painting" src=".\assets\textures\painting\painting.jpg" preload />
-            <img id="paintingDark" src=".\assets\textures\painting\paintingDark.png" preload />
+            <img id="painting" src="..\assets\textures\painting\painting.jpg" preload />
+            <img id="paintingDark" src="..\assets\textures\painting\paintingDark.png" preload />
             
-            <img id="btn1" src =".\assets\textures\buttons\btn1.png" preload />
-            <img id="btn2" src =".\assets\textures\buttons\btn2.png" preload />
-            <img id="btn3" src =".\assets\textures\buttons\btn3.png" preload /> 
-            <img id="btn4" src =".\assets\textures\buttons\btn4.png" preload />
+            <img id="btn1" src ="..\assets\textures\buttons\btn1.png" preload />
+            <img id="btn2" src ="..\assets\textures\buttons\btn2.png" preload />
+            <img id="btn3" src ="..\assets\textures\buttons\btn3.png" preload /> 
+            <img id="btn4" src ="..\assets\textures\buttons\btn4.png" preload />
             
-            <img id="Soldiers1" src= ".\assets\textures\frame\Soldiers_1.png" preload />
-            <img id="Soldiers2" src= ".\assets\textures\frame\Soldiers_1.png" preload />
-            <img id="Cherries1" src= ".\assets\textures\frame\Cherries_1.png" preload />
-            <img id="Cherries2" src= ".\assets\textures\frame\Cherries_2.png" preload />
-            <img id="Bird"      src= ".\assets\textures\frame\Bird.png"       preload />
-            <img id="Angelus"   src= ".\assets\textures\frame\Angelus.png"    preload />
+            <img id="Soldiers1" src= "..\assets\textures\frame\Soldiers_1.png" preload />
+            <img id="Soldiers2" src= "..\assets\textures\frame\Soldiers_1.png" preload />
+            <img id="Cherries1" src= "..\assets\textures\frame\Cherries_1.png" preload />
+            <img id="Cherries2" src= "..\assets\textures\frame\Cherries_2.png" preload />
+            <img id="Bird"      src= "..\assets\textures\frame\Bird.png"       preload />
+            <img id="Angelus"   src= "..\assets\textures\frame\Angelus.png"    preload />
             
-            <video id="video" preload>
-                <source src=".\assets\video\Portrait.mov" type="video/qucktime" >
-                <source src=".\assets\video\Portrait.webm" type="video/webm" >
+            <video id="video" preload autoplay loop muted playsinline>
+                <source src="..\assets\video\Portrait.mov" type="video/qucktime" >
+                <source src="..\assets\video\Portrait.webm" type="video/webm" >
+                <source src="https://cdn.glitch.me/d5ef3291-2ef8-4cda-9f86-16dc430eefcd/Portraitmp4.mp4?v=1685027115097" type="video/mp4" >
             </video>
-            <video id='glowingIcons' preload>
-                <source src=".\assets\video\glowingIcons.webm" type="video/webm">
-                <source src=".\assets\video\glowingIcons.mp4" type= "video/mp4">
+            <video id="glowingIcons" preload autoplay loop muted playsinline>
+                <source  src="..\assets\video\glowingIcons.webm" type="video/webm">
+                <source  src="..\assets\video\glowingIcons.mp4" type= "video/mp4">
             </video>
             
             <audio id="audio1" preload>
-                <source src=".\assets\audio\voiceover\SoldiersVO.mp3" type="audio/mpeg">
+                <source src="..\assets\audio\voiceover\SoldiersVO.mp3" type="audio/mpeg">
             </audio>
             
             <audio id="audio2" preload>
-                <source src=".\assets\audio\voiceover\AngelusVO.mp3" type="audio/mpeg">
+                <source src="..\assets\audio\voiceover\AngelusVO.mp3" type="audio/mpeg">
             </audio>
             
             <audio id="audio3" preload>
-                <source src=".\assets\audio\voiceover\CherriesVO.mp3" type="audio/mpeg">
+                <source src="..\assets\audio\voiceover\CherriesVO.mp3" type="audio/mpeg">
             </audio>
             
             <audio id="audio4" preload>
-                <source src=".\assets\audio\voiceover\BirdVO.mp3" type="audio/mpeg">
+                <source src="..\assets\audio\voiceover\BirdVO.mp3" type="audio/mpeg">
             </audio>
         </a-assets>
 
         <a-camera position="0 0 0" look-controls="enabled: false" mouse-cursor></a-camera>
         <a-light type="ambient" color="#FFF"></a-light>
-        <a-entity id="target" mindar-image-target="targetIndex: 0" ar-controller>
+        <a-entity id="target" mindar-image-target="targetIndex: 0" ar-controller smooth-position="target: #trackedImage; factor: 0.1">
             
             <a-plane id="videooverlay" height="1.5" width="1.5" position="-0.2 0 0" 
                      material="src: #video; opacity: 0; transparent: false; alphaTest: 0.5"
