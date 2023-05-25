@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta charset="UTF-8" />
+    
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.1/dist/mindar-image-aframe.prod.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+    
+    <title>Smartify - Dali - Portrait of My Dead Brother</title>
+    
+    <script>
+        AFRAME.registerComponent("ar-controller", {
+            init: function () {
+                const target = document.getElementById("target");
+                const btn1 = document.getElementById("button1");
+                
+                // detect target found
+                target.addEventListener("targetFound", event => {
+                    console.log("target found");
+                    this.found = true;
+                    }
+                });
+                
+                // detect target lost
+                target.addEventListener("targetLost", event => {
+                    console.log("target lost");
+                    this.found = false
+                });
+
+                btn1.addEventListener("click", event => {
+                    console.log("btn1 click");
+                    let audio = document.getElementById("#audio1");
+                    if (this.found)
+                        audio.play();
+                });
+
+            }
+        })
+    </script>
+</head>
+
+<body>
+    <a-scene 
+        mindar-image="imageTargetSrc: .\assets\trackingfeatures\targets_small.mind; filterMinCF: 0.000001; filterBeta: 100" 
+        color-space="sRGB" 
+        renderer="colorManagement: true, physicallyCorrectLights" 
+        vr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false"
+        cursor="rayOrigin: mouse;"
+        raycaster="objects: .clickable"> <!-- -->
+      
+        <a-assets>
+            <img id="btn1" src =".\assets\textures\buttons\btn1.png" preload />
+            <audio id="audio1" preload>
+                <source src=".\assets\audio\voiceover\SoldiersVO.mp3" type="audio/mpeg">
+            </audio>
+        </a-assets>
+
+        <a-camera position="0 0 0" look-controls="enabled: false" mouse-cursor></a-camera>
+      
+        <a-light type="ambient" color="#FFF"></a-light>
+      
+        <a-entity id="target" mindar-image-target="targetIndex: 0" ar-controller>
+            <a-plane id= "button1" class="clickable" height=".5" width=".5" position="0.35 -0.5 0.01 " 
+                    material="src: #btn1; opacity: 1; transparent: false; alphaTest: 0.5"
+                    event-set= "_event: click"
+                    animation="startEvents: fadein; property: material.opacity; from: 0; to: 1; dur: 500;"></a-plane>
+        </a-entity>
+    </a-scene>
+</body>
+
+</html>
