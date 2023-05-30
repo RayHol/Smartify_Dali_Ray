@@ -98,9 +98,7 @@
 
 <body>
     <a-scene 
-
         mindar-image="imageTargetSrc: .\assets\trackingfeatures\targets_small.mind; warmupTolerance: 10; missTolerance: 1; filterMinCF: 0.0001; filterBeta: 0.001"
-n
         color-space="sRGB" 
         renderer="colorManagement: true, physicallyCorrectLights" 
         vr-mode-ui="enabled: false"
@@ -109,8 +107,8 @@ n
         raycaster="objects: .clickable"/> <!-- -->
 
         <a-assets>
-            <img id="painting" src="..\assets\textures\painting\painting.jpg" preload />
-            <img id="paintingDark" src="..\assets\textures\painting\paintingDark.png" preload />
+            <img id="painting" src=".\assets\textures\painting\painting.jpg" preload />
+            <img id="paintingDark" src=".\assets\textures\painting\paintingDark.png" preload />
             
             <img id="btn1" src =".\assets\textures\buttons\btn1.png" preload />
             <img id="btn2" src =".\assets\textures\buttons\btn2.png" preload />
@@ -124,12 +122,10 @@ n
             <img id="Bird"      src= ".\assets\textures\frame\Bird.png"       preload />
             <img id="Angelus"   src= ".\assets\textures\frame\Angelus.png"    preload />
             
-            <video id="video" preload autoplay loop muted playsinline>
-
+            <video id="video" preload autoplay playsinline>
                 <source src=".\assets\video\Portrait.mov" type="video/qucktime" >
                 <source src=".\assets\video\Portrait.webm" type="video/webm" >
                 <source src=".\assets\video\Portraitmp4.mp4" type="video/mp4" >//for IOS devices
-
             </video>
             <video id="glowingIcons" preload autoplay loop muted playsinline>
                 <source  src=".\assets\video\glowingIcons.webm" type="video/webm">
